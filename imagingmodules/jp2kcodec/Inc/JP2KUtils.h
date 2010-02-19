@@ -64,7 +64,7 @@ class TJ2kUtils
         * @param aR: second integer to compute.
         * @return TInt32: the ceiling between two integers aL and aR.
         */
-        static TInt32 Ceil( TInt32 aL, TInt32 aR );
+        static TInt32 CeilL( TInt32 aL, TInt32 aR );
 
         /**
         * Get the floor between two integers
@@ -73,7 +73,7 @@ class TJ2kUtils
         * @param aR: second integer to compute.
         * @return TInt32: the floor between two integers aL and aR.
         */
-        static TInt32 Floor( TInt32 aL, TInt32 aR );
+        static TInt32 FloorL( TInt32 aL, TInt32 aR );
 
         /**
         * Get the quotient and remainder
@@ -82,7 +82,7 @@ class TJ2kUtils
         * @param aDenom: divisor integer.
         * @return TDiv: the structure contains the quotient and remainder.
         */
-        static TDiv Div( TInt aNum, TInt aDenom );
+        static TDiv DivL( TInt aNum, TInt aDenom );
 
         /**
         * Get the log2 value of an integer

@@ -84,10 +84,10 @@ CJ2kTileInfo::~CJ2kTileInfo()
 void CJ2kTileInfo::InitializeL()
     {
     const TSizMarker &sizMarker = iImageInfo.SizMarker();
-    TUint16 numOfHorizTiles = iImageInfo.NumOfHorizTiles();
+    TUint16 numOfHorizTiles = iImageInfo.NumOfHorizTilesL();
 
     // Calculate the tile canvas
-    TDiv    tDiv = TJ2kUtils::Div( iSot.iIsot, numOfHorizTiles );
+    TDiv    tDiv = TJ2kUtils::DivL( iSot.iIsot, numOfHorizTiles );
     iTileCanvas.iTl = TPoint( Max( sizMarker.iXTOsiz + tDiv.rem * sizMarker.iXTsiz, sizMarker.iXOsiz ),
                               Max( sizMarker.iYTOsiz + tDiv.quot * sizMarker.iYTsiz, sizMarker.iYOsiz ) );
     iTileCanvas.iBr = TPoint( Min( sizMarker.iXTOsiz + ( tDiv.rem + 1 ) * sizMarker.iXTsiz, sizMarker.iXsiz ),

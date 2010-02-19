@@ -47,12 +47,12 @@ const TUint32 KLog2Table[] = { 0,1,2,4,8,16,32,64,128,256,512,1024,2048,
 // ============================ MEMBER FUNCTIONS ===============================
 
 // -----------------------------------------------------------------------------
-// TJ2kUtils::Ceil
+// TJ2kUtils::CeilL
 // Get the ceiling between two integers.
 // (other items were commented in a header).
 // -----------------------------------------------------------------------------
 //
-TInt32 TJ2kUtils::Ceil( TInt32 aL, TInt32 aR )
+TInt32 TJ2kUtils::CeilL( TInt32 aL, TInt32 aR )
     {
     // Check that no divided by zero calculation are done.
     if ( aR == 0 )
@@ -84,12 +84,12 @@ TInt32 TJ2kUtils::Ceil( TInt32 aL, TInt32 aR )
     }
 
 // -----------------------------------------------------------------------------
-// TJ2kUtils::Floor
+// TJ2kUtils::FloorL
 // Get the floor between two integers.
 // (other items were commented in a header).
 // -----------------------------------------------------------------------------
 //
-TInt32 TJ2kUtils::Floor( TInt32 aL, TInt32 aR )
+TInt32 TJ2kUtils::FloorL( TInt32 aL, TInt32 aR )
     {
     // Check that no divided by zero calculation are done.
     if ( aR == 0 )
@@ -108,12 +108,12 @@ TInt32 TJ2kUtils::Floor( TInt32 aL, TInt32 aR )
     }
 
 // -----------------------------------------------------------------------------
-// TJ2kUtils::Div
+// TJ2kUtils::DivL
 // Get the quotient and remainder.
 // (other items were commented in a header).
 // -----------------------------------------------------------------------------
 //
-TDiv TJ2kUtils::Div( TInt aNum, TInt aDenom )
+TDiv TJ2kUtils::DivL( TInt aNum, TInt aDenom )
     {
     // Check that no divided by zero calculation are done.
     if ( aDenom == 0 )

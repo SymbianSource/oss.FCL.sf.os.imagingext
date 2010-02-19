@@ -111,20 +111,20 @@ TPoint& CJ2kWriterComponentInfo::TileStartAt( TUint16 aTileIndex )
     }
 
 // -----------------------------------------------------------------------------
-// CJ2kWriterComponentInfo::UpdateNextTileStartAt
+// CJ2kWriterComponentInfo::UpdateNextTileStartAtL
 // Update the starting point of next tile
 // (other items were commented in a header).
 // -----------------------------------------------------------------------------
 //
-void CJ2kWriterComponentInfo::UpdateNextTileStartAt( TUint16 aTileIndex, 
+void CJ2kWriterComponentInfo::UpdateNextTileStartAtL( TUint16 aTileIndex, 
                                                      const TSize& aSize,
                                                      CJ2kImageInfo& aImageInfo )
     {
-    TUint16 numOfHorizTiles = aImageInfo.NumOfHorizTiles();
-    TUint16 numOfVertTiles  = aImageInfo.NumOfVertTiles();
+    TUint16 numOfHorizTiles = aImageInfo.NumOfHorizTilesL();
+    TUint16 numOfVertTiles  = aImageInfo.NumOfVertTilesL();
 
     // Calculate the p and q of a tile
-    TDiv tDiv = TJ2kUtils::Div( aTileIndex, numOfHorizTiles );
+    TDiv tDiv = TJ2kUtils::DivL( aTileIndex, numOfHorizTiles );
     if ( tDiv.rem != ( numOfHorizTiles - 1 ) )
         {
         iTileStartList[aTileIndex + 1].iX = iTileStartList[aTileIndex].iX + aSize.iWidth;
@@ -282,7 +282,7 @@ void CJ2kImageWriter::OutputImageL( CJ2kTileInfo& aTile, TUint16 aComponentIndex
                 iColorPixelBlock = STATIC_CAST( TRgb*, User::AllocL( 2 * KPixelsBlock * sizeof( TRgb ) ) );
                 }
 
-            CombineOutputFile( aTile, subbandSize );
+            CombineOutputFileL( aTile, subbandSize );
             for ( c = 0; c < iNumComponents; c++ )
                 {
                 iComponents[c]->FreeData();
@@ -308,7 +308,7 @@ void CJ2kImageWriter::OutputImageL( CJ2kTileInfo& aTile, TUint16 aComponentIndex
                 }
 
             // Output a single component
-            WriteOutputFile( aTile, c, subbandSize, bitdepth );
+            WriteOutputFileL( aTile, c, subbandSize, bitdepth );
             iComponents[c]->FreeData();
             }
         }
@@ -328,7 +328,7 @@ void CJ2kImageWriter::OutputImageL( CJ2kTileInfo& aTile, TUint16 aComponentIndex
                 bitdepth = iImageInfo.DepthOfComponent( c );
 
                 // Output single files 
-                WriteOutputFile( aTile, c, subbandSize, bitdepth );
+                WriteOutputFileL( aTile, c, subbandSize, bitdepth );
                 iComponents[c]->FreeData();
                 }
             }
@@ -340,7 +340,7 @@ void CJ2kImageWriter::OutputImageL( CJ2kTileInfo& aTile, TUint16 aComponentIndex
                 bitdepth = ( TUint8 )( ( iJ2kInfo.iPalette.iBList[0] & 0x7f )+1 );
 
                 // Output single files 
-                WriteOutputFile( aTile, c, subbandSize, bitdepth );
+                WriteOutputFileL( aTile, c, subbandSize, bitdepth );
                 iComponents[c]->FreeData();
                 }
             }
@@ -351,7 +351,7 @@ void CJ2kImageWriter::OutputImageL( CJ2kTileInfo& aTile, TUint16 aComponentIndex
             // Output only the first component to screen
             if( aComponentIndex == 0 )
                 {
-                WriteOutputFile( aTile, aComponentIndex, subbandSize, bitdepth );
+                WriteOutputFileL( aTile, aComponentIndex, subbandSize, bitdepth );
                 }
             iComponents[aComponentIndex]->FreeData();
             }
@@ -439,7 +439,7 @@ void CJ2kImageWriter::OutputImageL( CJ2kTileInfo& aTile, TUint16 aComponentIndex
                 iColorPixelBlock = STATIC_CAST( TRgb*, User::AllocL( 2 * KPixelsBlock * sizeof( TRgb ) ) );
                 }
 
-            CombineOutputFile( aTile, subbandSize );
+            CombineOutputFileL( aTile, subbandSize );
             for ( c = 0; c < iNumComponents; c++ )
                 {
                 iComponents[c]->FreeData();
@@ -465,7 +465,7 @@ void CJ2kImageWriter::OutputImageL( CJ2kTileInfo& aTile, TUint16 aComponentIndex
                 }
 
             // Output a single component
-            WriteOutputFile( aTile, c, subbandSize, bitdepth );
+            WriteOutputFileL( aTile, c, subbandSize, bitdepth );
             iComponents[c]->FreeData();
             }
         }
@@ -485,7 +485,7 @@ void CJ2kImageWriter::OutputImageL( CJ2kTileInfo& aTile, TUint16 aComponentIndex
                 bitdepth = iImageInfo.DepthOfComponent( c );
 
                 // Output single files 
-                WriteOutputFile( aTile, c, subbandSize, bitdepth );
+                WriteOutputFileL( aTile, c, subbandSize, bitdepth );
                 iComponents[c]->FreeData();
                 }
             }
@@ -497,7 +497,7 @@ void CJ2kImageWriter::OutputImageL( CJ2kTileInfo& aTile, TUint16 aComponentIndex
                 bitdepth = (TUint8)( ( iJ2kInfo.iPalette.iBList[0] & 0x7f )+1 );
 
                 // Output single files 
-                WriteOutputFile( aTile, c, subbandSize, bitdepth );
+                WriteOutputFileL( aTile, c, subbandSize, bitdepth );
                 iComponents[c]->FreeData();
                 }
             }
@@ -508,7 +508,7 @@ void CJ2kImageWriter::OutputImageL( CJ2kTileInfo& aTile, TUint16 aComponentIndex
             // Output only the first component to screen
             if( aComponentIndex == 0 )
                 {
-                WriteOutputFile( aTile, aComponentIndex, subbandSize, bitdepth );
+                WriteOutputFileL( aTile, aComponentIndex, subbandSize, bitdepth );
                 }
 
             iComponents[aComponentIndex]->FreeData();
@@ -1078,6 +1078,8 @@ void CJ2kImageWriter::InitializeICCProfileL()
         iMatrix[8] = ( TInt32 )( KSRGBMaxIntShifted * ( KSRGB20 * blueX  + KSRGB21 * blueY  + KSRGB22 * blueZ ) );
         
         iRedTRCLut = STATIC_CAST( TInt32*, User::AllocL( lutSize * sizeof( TInt32 ) ) );
+        //ASSERT(redTRC);
+        User::LeaveIfNull(redTRC);
         if ( redTRC->Length() == 1 )
             {
             gamma = (TReal)( *redTRC )[0] / KGamma;
@@ -1112,6 +1114,8 @@ void CJ2kImageWriter::InitializeICCProfileL()
             }
 
         iGreenTRCLut = STATIC_CAST( TInt32*, User::AllocL( lutSize * sizeof( TInt32 ) ) );
+        //ASSERT(greenTRC);
+        User::LeaveIfNull(greenTRC);
         if ( greenTRC->Length() == 1 )
             {
             gamma = (TReal)( *greenTRC )[0] / KGamma;
@@ -1146,6 +1150,8 @@ void CJ2kImageWriter::InitializeICCProfileL()
             }
 
         iBlueTRCLut = STATIC_CAST( TInt32*, User::AllocL( lutSize * sizeof( TInt32 ) ) );
+        //ASSERT(blueTRC);
+        User::LeaveIfNull(blueTRC);
         if ( blueTRC->Length() == 1 )
             {
             gamma = (TReal)( *blueTRC )[0] / KGamma;
@@ -1174,6 +1180,8 @@ void CJ2kImageWriter::InitializeICCProfileL()
         {
 
         iGrayTRCLut = STATIC_CAST( TInt32*, User::AllocL( lutSize * sizeof( TInt32 ) ) );
+        //ASSERT(grayTRC);
+        User::LeaveIfNull(grayTRC);
         if ( grayTRC->Length() == 1 )
             {
 
@@ -1257,8 +1265,8 @@ void CJ2kImageWriter::InitializeOutputParametersL()
     TUint16 tileIndex = 0;            
     TUint16 tileYIndex = 0;
     TPoint tileStart( 0, 0 );
-    TUint16 numOfHorizTiles = iImageInfo.NumOfHorizTiles();
-    TUint16 numOfVertTiles  = iImageInfo.NumOfVertTiles();
+    TUint16 numOfHorizTiles = iImageInfo.NumOfHorizTilesL();
+    TUint16 numOfVertTiles  = iImageInfo.NumOfVertTilesL();
     TRect tileCanvas( 0, 0, 0, 0 );
     TRect componentCanvas( 0, 0, 0, 0 );
     const TSizMarker &sizMarker = iImageInfo.SizMarker();
@@ -1286,11 +1294,11 @@ void CJ2kImageWriter::InitializeOutputParametersL()
                 tileCanvas.iBr = TPoint( Min( sizMarker.iXTOsiz + ( m + 1 ) * sizMarker.iXTsiz, sizMarker.iXsiz ),
                                          Min( sizMarker.iYTOsiz + ( l + 1 ) * sizMarker.iYTsiz, sizMarker.iYsiz ) );
                 // Component canvas
-                componentCanvas.iTl = TPoint( TJ2kUtils::Ceil( tileCanvas.iTl.iX, sizMarker.iXRsiz[compIndex] ),
-                                              TJ2kUtils::Ceil( tileCanvas.iTl.iY, sizMarker.iYRsiz[compIndex] ) );
+                componentCanvas.iTl = TPoint( TJ2kUtils::CeilL( tileCanvas.iTl.iX, sizMarker.iXRsiz[compIndex] ),
+                                              TJ2kUtils::CeilL( tileCanvas.iTl.iY, sizMarker.iYRsiz[compIndex] ) );
 
-                componentCanvas.iBr = TPoint( TJ2kUtils::Ceil( tileCanvas.iBr.iX, sizMarker.iXRsiz[compIndex] ),
-                                              TJ2kUtils::Ceil( tileCanvas.iBr.iY, sizMarker.iYRsiz[compIndex] ) );
+                componentCanvas.iBr = TPoint( TJ2kUtils::CeilL( tileCanvas.iBr.iX, sizMarker.iXRsiz[compIndex] ),
+                                              TJ2kUtils::CeilL( tileCanvas.iBr.iY, sizMarker.iYRsiz[compIndex] ) );
 
                 if ( m )
                     {
@@ -1547,12 +1555,12 @@ void CJ2kImageWriter::MapComponentsL( TUint16 aNumCSComp,
     }
 
 // -----------------------------------------------------------------------------
-// CJ2kImageWriter::WriteOutputFile
+// CJ2kImageWriter::WriteOutputFileL
 // Write the component to the single output file
 // (other items were commented in a header).
 // -----------------------------------------------------------------------------
 //
-void CJ2kImageWriter::WriteOutputFile( CJ2kTileInfo& aTile,
+void CJ2kImageWriter::WriteOutputFileL( CJ2kTileInfo& aTile,
                                        TUint16 aCompIndex,
                                        const TSize& aSize,
                                        TUint16 aBitDepth )
@@ -1565,7 +1573,7 @@ void CJ2kImageWriter::WriteOutputFile( CJ2kTileInfo& aTile,
     TInt16 tempNumLevels = (TUint16)( numLevels - iImageInfo.LevelDrop() );
    
     TPoint tileStartCoord = currentComponent->TileStartAt( aTile.SotMarker().iIsot );
-    currentComponent->UpdateNextTileStartAt( aTile.SotMarker().iIsot, aSize, iImageInfo );
+    currentComponent->UpdateNextTileStartAtL( aTile.SotMarker().iIsot, aSize, iImageInfo );
 
     if ( tempNumLevels < 0 )
         {
@@ -1589,7 +1597,7 @@ void CJ2kImageWriter::WriteOutputFile( CJ2kTileInfo& aTile,
         // Also take care of next tile's starting position
         outputSize.iHeight /= stepSize;
         outputSize.iWidth /= stepSize;
-        iComponents[0]->UpdateNextTileStartAt( aTile.SotMarker().iIsot, outputSize, iImageInfo );
+        iComponents[0]->UpdateNextTileStartAtL( aTile.SotMarker().iIsot, outputSize, iImageInfo );
         }
 
     TInt32 dcShift = 0;
@@ -1669,12 +1677,12 @@ void CJ2kImageWriter::WriteOutputFile( CJ2kTileInfo& aTile,
     }
 
 // -----------------------------------------------------------------------------
-// CJ2kImageWriter::CombineOutputFile
+// CJ2kImageWriter::CombineOutputFileL
 // Write all components of the tile to the single output file
 // (other items were commented in a header).
 // -----------------------------------------------------------------------------
 //
-void CJ2kImageWriter::CombineOutputFile( CJ2kTileInfo& aTile, const TSize& aSize )
+void CJ2kImageWriter::CombineOutputFileL( CJ2kTileInfo& aTile, const TSize& aSize )
     {
     TInt32 i = 0;
     TInt32 j = 0;
@@ -1683,7 +1691,7 @@ void CJ2kImageWriter::CombineOutputFile( CJ2kTileInfo& aTile, const TSize& aSize
 
     TSize outputSize = aSize;
     TPoint& tileStartCoord = iComponents[0]->TileStartAt( aTile.SotMarker().iIsot );
-    iComponents[0]->UpdateNextTileStartAt( aTile.SotMarker().iIsot, outputSize, iImageInfo );
+    iComponents[0]->UpdateNextTileStartAtL( aTile.SotMarker().iIsot, outputSize, iImageInfo );
 
     if ( tempNumLevels < 0 )
         {
@@ -1705,7 +1713,7 @@ void CJ2kImageWriter::CombineOutputFile( CJ2kTileInfo& aTile, const TSize& aSize
         // Also take care of next tile's starting position
         outputSize.iHeight /= stepSize;
         outputSize.iWidth /= stepSize;
-        iComponents[0]->UpdateNextTileStartAt( aTile.SotMarker().iIsot, outputSize, iImageInfo );
+        iComponents[0]->UpdateNextTileStartAtL( aTile.SotMarker().iIsot, outputSize, iImageInfo );
         
         tempNumLevels = 0;
         }

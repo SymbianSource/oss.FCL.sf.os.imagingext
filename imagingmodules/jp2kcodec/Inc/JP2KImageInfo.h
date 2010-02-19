@@ -161,14 +161,14 @@ class CJ2kImageInfo : public CBase, public MJ2kPacketHeaderReader
         * @since 2.6
         * @return TUint16: number of tiles in horizontal position.
         */
-        TUint16 NumOfHorizTiles() const;
+        TUint16 NumOfHorizTilesL() const;
 
         /**
         * Get total number of tiles in vertical position
         * @since 2.6
         * @return TUint16: number of tiles in vertical position.
         */
-        TUint16 NumOfVertTiles() const;
+        TUint16 NumOfVertTilesL() const;
 
         /**
         * Get total number of components

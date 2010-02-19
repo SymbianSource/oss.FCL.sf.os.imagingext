@@ -248,10 +248,10 @@ void CJ2kSubband::BuildPacketsL( CJ2kComponentInfo& aComponent, HBufC8 *aPrecinc
 
             denom = 1 << ( aComponent.Levels() - resLevel );
 
-            trx0 = TJ2kUtils::Ceil( aComponent.ComponentCanvas().iTl.iX, denom );
-            try0 = TJ2kUtils::Ceil( aComponent.ComponentCanvas().iTl.iY, denom );
-            trx1 = TJ2kUtils::Ceil( aComponent.ComponentCanvas().iBr.iX, denom );
-            try1 = TJ2kUtils::Ceil( aComponent.ComponentCanvas().iBr.iY, denom );
+            trx0 = TJ2kUtils::CeilL( aComponent.ComponentCanvas().iTl.iX, denom );
+            try0 = TJ2kUtils::CeilL( aComponent.ComponentCanvas().iTl.iY, denom );
+            trx1 = TJ2kUtils::CeilL( aComponent.ComponentCanvas().iBr.iX, denom );
+            try1 = TJ2kUtils::CeilL( aComponent.ComponentCanvas().iBr.iY, denom );
 
             nOrig = ( trx0 / (  1 << ppxL  ) ) * ( 1 << ppxL );
             mOrig = ( try0 / (  1 << ppyL  ) ) * ( 1 << ppyL );
@@ -295,7 +295,7 @@ void CJ2kSubband::BuildPacketsL( CJ2kComponentInfo& aComponent, HBufC8 *aPrecinc
                                 packetIndex = ( TUint16 )( yIndex * tmpSize.iWidth + xIndex );
                                 packet = subband->iPacketList[packetIndex];
                                 packet->SetPacketCanvas( trx0, try0, trx1, try1 );
-                                packet->SetNumOfBlocks( cblkSize );
+                                packet->SetNumOfBlocksL( cblkSize );
                                 packet->BuildCodeBlocksL( xCoord, yCoord, cblkSize );
                                 }
                             xCoord += tmpX;
