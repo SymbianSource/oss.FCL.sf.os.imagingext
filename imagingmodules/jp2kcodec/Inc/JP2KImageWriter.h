@@ -139,7 +139,7 @@ class CJ2kWriterComponentInfo : public CBase
         * @param aSize: the size of the tile.
         * @param aImageInfo: a reference to CJ2kImageInfo object.
         */
-        void UpdateNextTileStartAt(TUint16 aTileIndex, const TSize& aSize, CJ2kImageInfo& aImageInfo );
+        void UpdateNextTileStartAtL(TUint16 aTileIndex, const TSize& aSize, CJ2kImageInfo& aImageInfo );
 
     public: // Functions from base classes
        
@@ -397,7 +397,7 @@ class CJ2kImageWriter : public CBase
         * @param aSize: the size of component.
         * @param aBitDepth: the bit depth.
         */
-        void WriteOutputFile( CJ2kTileInfo& aTile, TUint16 aCompIndex, const TSize& aSize,
+        void WriteOutputFileL( CJ2kTileInfo& aTile, TUint16 aCompIndex, const TSize& aSize,
                               TUint16 aBitDepth );
 
         /**
@@ -406,7 +406,7 @@ class CJ2kImageWriter : public CBase
         * @param aTile: a reference to CJ2kTileInfo object.
         * @param aSize: the size to output.
         */
-        void CombineOutputFile( CJ2kTileInfo& aTile, const TSize& aSize );
+        void CombineOutputFileL( CJ2kTileInfo& aTile, const TSize& aSize );
 
         /**
         * Write out a color pixel
