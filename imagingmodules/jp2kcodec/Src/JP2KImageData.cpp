@@ -63,9 +63,11 @@ TJp2kComment::TJp2kComment() :
 TImageDataBlock* TJp2kComment::DuplicateL( CFrameImageData& aFrameImageData ) const
     {
     TJp2kComment *jp2kComment = new ( ELeave ) TJp2kComment( *this );
-    CleanupDeletePushL( jp2kComment );
+    //CleanupDeletePushL( jp2kComment );
+    CleanupStack::PushL( jp2kComment );
 
     jp2kComment->iComment = jp2kComment->iComment->AllocLC();
+    CleanupStack::PushL( jp2kComment->iComment );
 
     User::LeaveIfError( aFrameImageData.AppendImageBuffer( jp2kComment->iComment ) );
     CleanupStack::Pop( 2 ); // jp2kComment and jp2kComment->iComment
@@ -93,9 +95,11 @@ TJp2kIprBox::TJp2kIprBox() :
 TImageDataBlock* TJp2kIprBox::DuplicateL( CFrameImageData& aFrameImageData ) const
     {
     TJp2kIprBox *jp2kIprBox = new ( ELeave ) TJp2kIprBox( *this );
-    CleanupDeletePushL( jp2kIprBox );
+    //CleanupDeletePushL( jp2kIprBox );
+    CleanupStack::PushL( jp2kIprBox );
 
     jp2kIprBox->iIprData = jp2kIprBox->iIprData->AllocLC();
+    CleanupStack::PushL( jp2kIprBox->iIprData );
 
     User::LeaveIfError( aFrameImageData.AppendImageBuffer( jp2kIprBox->iIprData ) );
     CleanupStack::Pop( 2 ); // jp2kIprBox and jp2kIprBox->iIprData
@@ -123,9 +127,11 @@ TJp2kXmlBox::TJp2kXmlBox() :
 TImageDataBlock* TJp2kXmlBox::DuplicateL( CFrameImageData& aFrameImageData ) const
     {
     TJp2kXmlBox *jp2kXmlBox = new ( ELeave ) TJp2kXmlBox( *this );
-    CleanupDeletePushL( jp2kXmlBox );
+    //CleanupDeletePushL( jp2kXmlBox );
+    CleanupStack::PushL(jp2kXmlBox);
 
     jp2kXmlBox->iXmlData = jp2kXmlBox->iXmlData->AllocLC();
+    CleanupStack::PushL(jp2kXmlBox->iXmlData);
 
     User::LeaveIfError( aFrameImageData.AppendImageBuffer( jp2kXmlBox->iXmlData ) );
     CleanupStack::Pop( 2 ); // jp2kXmlBox and jp2kXmlBox->iXmlData
@@ -154,9 +160,11 @@ TJp2kUuidBox::TJp2kUuidBox() :
 TImageDataBlock* TJp2kUuidBox::DuplicateL( CFrameImageData& aFrameImageData ) const
     {
     TJp2kUuidBox *jp2kUuidBox = new ( ELeave ) TJp2kUuidBox( *this );
-    CleanupDeletePushL( jp2kUuidBox );
+    //CleanupDeletePushL( jp2kUuidBox );
+    CleanupStack::PushL( jp2kUuidBox );
 
     jp2kUuidBox->iUuidData = jp2kUuidBox->iUuidData->AllocLC();
+    CleanupStack::PushL( jp2kUuidBox->iUuidData );
 
     User::LeaveIfError( aFrameImageData.AppendImageBuffer( jp2kUuidBox->iUuidData ) );
     CleanupStack::Pop( 2 ); // jp2kUuidBox and jp2kUuidBox->iUuidData
@@ -188,13 +196,16 @@ TJp2kUuidInfoBox::TJp2kUuidInfoBox() :
 TImageDataBlock* TJp2kUuidInfoBox::DuplicateL( CFrameImageData& aFrameImageData ) const
     {
     TJp2kUuidInfoBox *jp2kUuidInfoBox = new ( ELeave ) TJp2kUuidInfoBox( *this );
-    CleanupDeletePushL( jp2kUuidInfoBox );
+    //CleanupDeletePushL( jp2kUuidInfoBox );
+    CleanupStack::PushL( jp2kUuidInfoBox );
 
     jp2kUuidInfoBox->iUuidInfoId = jp2kUuidInfoBox->iUuidInfoId->AllocLC();
+    CleanupStack::PushL( jp2kUuidInfoBox->iUuidInfoId );
     User::LeaveIfError( aFrameImageData.AppendImageBuffer( jp2kUuidInfoBox->iUuidInfoId ) );
     CleanupStack::Pop( 1 ); // jp2kUuidInfoBox->iUuidInfoId
 
     jp2kUuidInfoBox->iUuidInfoData = jp2kUuidInfoBox->iUuidInfoData->AllocLC();
+    CleanupStack::PushL( jp2kUuidInfoBox->iUuidInfoData );
     User::LeaveIfError( aFrameImageData.AppendImageBuffer( jp2kUuidInfoBox->iUuidInfoData ) );
     CleanupStack::Pop( 2 ); // jp2kUuidInfoBox and jp2kUuidInfoBox->iUuidInfoData
 

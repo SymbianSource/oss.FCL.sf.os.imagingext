@@ -1,0 +1,69 @@
+/*
+* ============================================================================
+*  Name     : H.264 ARM Video Encoder for S60
+*  Part of  : H.264 ARM Video Encoder
+*
+*  Description: H.264 ARM Video Encoder for S60
+*
+*  Version: 1.0
+*
+*  Copyright © 2004-2008 Nokia. All rights reserved.
+*  This material, including documentation and any related 
+*  computer programs, is protected by copyright controlled by 
+*  Nokia. All rights are reserved. Copying, including 
+*  reproducing, storing, adapting or translating, any 
+*  or all of this material requires the prior written consent of 
+*  Nokia. This material also contains confidential 
+*  information which may not be disclosed to others without the 
+*  prior written consent of Nokia.
+* ==============================================================================
+*/
+
+#include <platform_paths.hrh>
+PRJ_PLATFORMS
+DEFAULT
+
+// Exported headers
+PRJ_EXPORTS
+
+// WINSCW UDEB
+../binaries/winscw/udeb/armh264enchwdevice.dll       /epoc32/release/winscw/udeb/armh264enchwdevice.dll  
+../binaries/winscw/udeb/armutilities.dll             /epoc32/release/winscw/udeb/armutilities.dll        
+../binaries/winscw/udeb/armprocessengine.dll         /epoc32/release/winscw/udeb/armprocessengine.dll    
+../binaries/winscw/udeb/armh264codec.dll             /epoc32/release/winscw/udeb/armh264codec.dll        
+../binaries/winscw/udeb/armh264encoder.dll           /epoc32/release/winscw/udeb/armh264encoder.dll      
+
+
+// WINSCW UREL                                                                                 
+../binaries/winscw/urel/armh264enchwdevice.dll       /epoc32/release/winscw/urel/armh264enchwdevice.dll  
+../binaries/winscw/urel/armutilities.dll             /epoc32/release/winscw/urel/armutilities.dll        
+../binaries/winscw/urel/armprocessengine.dll         /epoc32/release/winscw/urel/armprocessengine.dll    
+../binaries/winscw/urel/armh264codec.dll             /epoc32/release/winscw/urel/armh264codec.dll        
+../binaries/winscw/urel/armh264encoder.dll           /epoc32/release/winscw/urel/armh264encoder.dll      
+
+
+// ARMV5 UDEB
+../binaries/armv5/udeb/armh264enchwdevice.dll        /epoc32/release/armv5/udeb/armh264enchwdevice.dll   
+../binaries/armv5/udeb/armutilities.dll              /epoc32/release/armv5/udeb/armutilities.dll         
+../binaries/armv5/udeb/armprocessengine.dll          /epoc32/release/armv5/udeb/armprocessengine.dll     
+../binaries/armv5/udeb/armh264codec.dll              /epoc32/release/armv5/udeb/armh264codec.dll         
+../binaries/armv5/udeb/armh264encoder.dll            /epoc32/release/armv5/udeb/armh264encoder.dll       
+
+
+// ARMV5 UREL
+../binaries/armv5/urel/armh264enchwdevice.dll        /epoc32/release/armv5/urel/armh264enchwdevice.dll   
+../binaries/armv5/urel/armutilities.dll              /epoc32/release/armv5/urel/armutilities.dll         
+../binaries/armv5/urel/armprocessengine.dll          /epoc32/release/armv5/urel/armprocessengine.dll     
+../binaries/armv5/urel/armh264codec.dll              /epoc32/release/armv5/urel/armh264codec.dll         
+../binaries/armv5/urel/armh264encoder.dll            /epoc32/release/armv5/urel/armh264encoder.dll       
+
+
+// RESOURCE BINARY
+../binaries/rsc/armh264enchwdevice.rsc               /epoc32/data/Z/resource/plugins/armh264enchwdevice.rsc
+
+
+// SIS stub
+../data/H264AVCVideoEncARM.SIS						   /epoc32/data/z/system/install/H264AVCVideoEncARM.sis
+../rom/h264avcvideoencarm.iby   CORE_OS_LAYER_IBY_EXPORT_PATH(h264avcvideoencarm.iby)
+
+// End of File

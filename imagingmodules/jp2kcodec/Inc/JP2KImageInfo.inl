@@ -24,26 +24,26 @@
 // ============================ MEMBER FUNCTIONS ===============================
 
 // -----------------------------------------------------------------------------
-// CJ2kImageInfo::NumOfHorizTiles
+// CJ2kImageInfo::NumOfHorizTilesL
 // Get total number of tiles in horizontal position
 // (other items were commented in a header).
 // -----------------------------------------------------------------------------
 //
-inline TUint16 CJ2kImageInfo::NumOfHorizTiles() const
+inline TUint16 CJ2kImageInfo::NumOfHorizTilesL() const
     {
-    return (TUint16)( TJ2kUtils::Ceil( iSizMarker.iXsiz - iSizMarker.iXTOsiz,
+    return (TUint16)( TJ2kUtils::CeilL( iSizMarker.iXsiz - iSizMarker.iXTOsiz,
                                        iSizMarker.iXTsiz ) );
     }
 
 // -----------------------------------------------------------------------------
-// CJ2kImageInfo::NumOfVertTiles
+// CJ2kImageInfo::NumOfVertTilesL
 // Get total number of tiles in vertical position
 // (other items were commented in a header).
 // -----------------------------------------------------------------------------
 //
-inline TUint16 CJ2kImageInfo::NumOfVertTiles() const
+inline TUint16 CJ2kImageInfo::NumOfVertTilesL() const
     {
-    return (TUint16)( TJ2kUtils::Ceil( iSizMarker.iYsiz - iSizMarker.iYTOsiz,
+    return (TUint16)( TJ2kUtils::CeilL( iSizMarker.iYsiz - iSizMarker.iYTOsiz,
                                        iSizMarker.iYTsiz ) );
     }
 

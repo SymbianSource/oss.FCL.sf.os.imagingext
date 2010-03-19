@@ -1,0 +1,18 @@
+;Languages
+&EN
+
+;Header
+#{"MDF AVC Encoder"}, (0x10282CFE), 1, 0, 0, TYPE=SA
+
+;Localised Vendor name
+%{"Nokia"}
+
+;Unique Vendor name
+:"Nokia"
+
+;Files
+""-"z:\sys\bin\armh264codec.dll"
+""-"z:\sys\bin\armh264encoder.dll"
+""-"z:\sys\bin\armprocessengine.dll"
+""-"z:\sys\bin\armutilities.dll"
+""-"z:\sys\bin\armh264enchwdevice.dll"

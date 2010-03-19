@@ -97,17 +97,17 @@ void CJ2kPacket::SetPacketCanvas( TInt32 aX, TInt32 aY, TInt32 aWidth, TInt32 aH
     }
 
 // -----------------------------------------------------------------------------
-// CJ2kPacket::SetNumOfBlocks
+// CJ2kPacket::SetNumOfBlocksL
 // Set the number of blocks
 // (other items were commented in a header).
 // -----------------------------------------------------------------------------
 //
-void CJ2kPacket::SetNumOfBlocks( TSize& aCodeBlock )
+void CJ2kPacket::SetNumOfBlocksL( TSize& aCodeBlock )
     {
-    TInt32 x0 = TJ2kUtils::Floor( iPacketCanvas.iTl.iX, aCodeBlock.iWidth ) * aCodeBlock.iWidth;
-    TInt32 y0 = TJ2kUtils::Floor( iPacketCanvas.iTl.iY, aCodeBlock.iHeight ) * aCodeBlock.iHeight;
-    TInt32 x1 = TJ2kUtils::Ceil( iPacketCanvas.iTl.iX + iPacketCanvas.Width(), aCodeBlock.iWidth ) * aCodeBlock.iWidth;
-    TInt32 y1 = TJ2kUtils::Ceil( iPacketCanvas.iTl.iY + iPacketCanvas.Height(), aCodeBlock.iHeight ) * aCodeBlock.iHeight;
+    TInt32 x0 = TJ2kUtils::FloorL( iPacketCanvas.iTl.iX, aCodeBlock.iWidth ) * aCodeBlock.iWidth;
+    TInt32 y0 = TJ2kUtils::FloorL( iPacketCanvas.iTl.iY, aCodeBlock.iHeight ) * aCodeBlock.iHeight;
+    TInt32 x1 = TJ2kUtils::CeilL( iPacketCanvas.iTl.iX + iPacketCanvas.Width(), aCodeBlock.iWidth ) * aCodeBlock.iWidth;
+    TInt32 y1 = TJ2kUtils::CeilL( iPacketCanvas.iTl.iY + iPacketCanvas.Height(), aCodeBlock.iHeight ) * aCodeBlock.iHeight;
     iCodeBlockSize.iWidth  = ( x1 - x0 ) / aCodeBlock.iWidth;
     iCodeBlockSize.iHeight = ( y1 - y0 ) / aCodeBlock.iHeight;
     }
@@ -237,6 +237,7 @@ TUint8 CJ2kPacket::ReadPacketHeaderL( CJ2kTileInfo& aTile, CJ2kComponentInfo& aC
                         while ( subband->SubbandType() != aSubband.LastSubbandProcessed() )
                             {
                             subband = subband->NextSubbandRaster();
+                            User::LeaveIfNull(subband);
                             }
                         }
                     }
@@ -865,6 +866,7 @@ TUint8 CJ2kPacket::ReadPacketBodyL( CJ2kTileInfo& aTile, CJ2kComponentInfo& aCom
                 while ( subband->SubbandType() != aSubband.LastSubbandProcessed() )
                     {
                     subband = subband->NextSubbandRaster();
+                    User::LeaveIfNull(subband); 
                     }
                 }
             }
@@ -877,9 +879,10 @@ TUint8 CJ2kPacket::ReadPacketBodyL( CJ2kTileInfo& aTile, CJ2kComponentInfo& aCom
         TUint16 layer = aTile.LastLayerProcessed();
         TInt32  totalLength = 0;
         TUint8 *rollbackPtr = CONST_CAST( TUint8*, reader.iPtr );
-        
-        CJ2kPacket *packet = CONST_CAST( CJ2kPacket*, &subband->PacketAt( aSubband.LastPacketProcessed() ) );
         CJ2kCodeBlock *codeBlock = 0;
+        
+        CJ2kPacket * packet = CONST_CAST( CJ2kPacket*, &subband->PacketAt( aSubband.LastPacketProcessed() ) );
+        
         do
             {
         

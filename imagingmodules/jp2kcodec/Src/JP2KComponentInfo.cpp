@@ -99,8 +99,8 @@ TUint8 CJ2kComponentInfo::RPCLProgressionL( CJ2kTileInfo& aTile )
     TUint8 diff = (TUint8)( iNumOfLevels - level );
     if ( level <= iNumOfLevels )
         {
-        TInt trx0 = TJ2kUtils::Ceil( iComponentCanvas.iTl.iX, 1 << diff );
-        TInt try0 = TJ2kUtils::Ceil( iComponentCanvas.iTl.iY, 1 << diff );
+        TInt trx0 = TJ2kUtils::CeilL( iComponentCanvas.iTl.iX, 1 << diff );
+        TInt try0 = TJ2kUtils::CeilL( iComponentCanvas.iTl.iY, 1 << diff );
         const TSizMarker& sizMarker = aTile.ImageInfo().SizMarker();
 
         if ( ( ( aTile.LastN1Processed() % (TInt)( sizMarker.iYRsiz[aTile.LastComponentProcessed()] * iGridList[level].iHeight ) == 0) ||
@@ -130,8 +130,8 @@ TUint8 CJ2kComponentInfo::CPRLProgressionL( CJ2kTileInfo& aTile )
 
     if (level <= iNumOfLevels)
         {
-        TInt trx0 = TJ2kUtils::Ceil( iComponentCanvas.iTl.iX, 1 << diff );
-        TInt try0 = TJ2kUtils::Ceil( iComponentCanvas.iTl.iY, 1 << diff );
+        TInt trx0 = TJ2kUtils::CeilL( iComponentCanvas.iTl.iX, 1 << diff );
+        TInt try0 = TJ2kUtils::CeilL( iComponentCanvas.iTl.iY, 1 << diff );
         const TSizMarker& sizMarker = aTile.ImageInfo().SizMarker();
 
         if ( ( ( aTile.LastN1Processed() % (TInt)( sizMarker.iYRsiz[aTile.LastComponentProcessed()] * iGridList[level].iHeight ) == 0 ) ||
@@ -254,10 +254,10 @@ void CJ2kComponentInfo::ConstructL(  CJ2kTileInfo& aTile, TUint16 aIndex  )
     const TSizMarker& sizMarker = imageInfo.SizMarker();
     const TRect& tileCanvas = aTile.TileCanvas();
 
-    iComponentCanvas.iTl = TPoint( TJ2kUtils::Ceil( tileCanvas.iTl.iX, sizMarker.iXRsiz[aIndex] ),
-                                   TJ2kUtils::Ceil( tileCanvas.iTl.iY, sizMarker.iYRsiz[aIndex] ) );
-    iComponentCanvas.iBr = TPoint( TJ2kUtils::Ceil( tileCanvas.iBr.iX, sizMarker.iXRsiz[aIndex] ),
-                                   TJ2kUtils::Ceil( tileCanvas.iBr.iY, sizMarker.iYRsiz[aIndex] ) );
+    iComponentCanvas.iTl = TPoint( TJ2kUtils::CeilL( tileCanvas.iTl.iX, sizMarker.iXRsiz[aIndex] ),
+                                   TJ2kUtils::CeilL( tileCanvas.iTl.iY, sizMarker.iYRsiz[aIndex] ) );
+    iComponentCanvas.iBr = TPoint( TJ2kUtils::CeilL( tileCanvas.iBr.iX, sizMarker.iXRsiz[aIndex] ),
+                                   TJ2kUtils::CeilL( tileCanvas.iBr.iY, sizMarker.iYRsiz[aIndex] ) );
 
     if ( iComponentCanvas.Width(  ) <= 0 || iComponentCanvas.Height(  ) <= 0 )
         {
@@ -325,14 +325,14 @@ void CJ2kComponentInfo::ConstructL(  CJ2kTileInfo& aTile, TUint16 aIndex  )
             }
         denom = 1 << ( iNumOfLevels - index );
 
-        trx0 = TJ2kUtils::Ceil( iComponentCanvas.iTl.iX, denom );
-        try0 = TJ2kUtils::Ceil( iComponentCanvas.iTl.iY, denom );
-        trx1 = TJ2kUtils::Ceil( iComponentCanvas.iBr.iX, denom );
-        try1 = TJ2kUtils::Ceil( iComponentCanvas.iBr.iY, denom );
+        trx0 = TJ2kUtils::CeilL( iComponentCanvas.iTl.iX, denom );
+        try0 = TJ2kUtils::CeilL( iComponentCanvas.iTl.iY, denom );
+        trx1 = TJ2kUtils::CeilL( iComponentCanvas.iBr.iX, denom );
+        try1 = TJ2kUtils::CeilL( iComponentCanvas.iBr.iY, denom );
 
         if ( trx1 > trx0 )
             {
-            precinct.iWidth = TJ2kUtils::Ceil( trx1, 1 << ppx ) - TJ2kUtils::Floor( trx0, 1 << ppx );
+            precinct.iWidth = TJ2kUtils::CeilL( trx1, 1 << ppx ) - TJ2kUtils::FloorL( trx0, 1 << ppx );
             }
         else
             {
@@ -341,7 +341,7 @@ void CJ2kComponentInfo::ConstructL(  CJ2kTileInfo& aTile, TUint16 aIndex  )
 
         if ( try1 > try0 )
             {
-            precinct.iHeight = TJ2kUtils::Ceil( try1, 1 << ppy ) - TJ2kUtils::Floor( try0, 1 << ppy );
+            precinct.iHeight = TJ2kUtils::CeilL( try1, 1 << ppy ) - TJ2kUtils::FloorL( try0, 1 << ppy );
             }
         else
             {

@@ -80,7 +80,7 @@ class CJ2kPacket : public CBase
         * @since 2.6
         * @param aCodeBlock: the size of the codeblock.
         */
-        void SetNumOfBlocks( TSize& aCodeBlock );
+        void SetNumOfBlocksL( TSize& aCodeBlock );
 
         /**
         * Build the inclusive informaiton of the packet
