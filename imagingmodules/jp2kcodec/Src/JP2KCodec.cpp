@@ -271,7 +271,7 @@ TFrameState CJp2kReadCodec::ProcessFrameHeaderL( TBufPtr8& aData )
         jp2kComment->iComment = mainMarker.iCom[index]->iCcom;
 
         User::LeaveIfError( iFrameData->AppendImageData( jp2kComment ) );
-        CleanupStack::Pop();
+        CleanupStack::Pop(jp2kComment);
 
         // Transfer the ownership of the buffer from TMainMarker to framework
         User::LeaveIfError( iFrameData->AppendImageBuffer( jp2kComment->iComment ) );
@@ -841,8 +841,7 @@ TFrameState CJp2kReadCodec::ReadCODL( TBool aMain )
         {
         // COD in Tile Part Header
         codMarker = new ( ELeave ) TCODMarker;        
-        //CleanupDeletePushL( codMarker );
-        CleanupStack::PushL(codMarker);
+        CleanupDeletePushL( codMarker );
         }
 
     codMarker->iScod = *iReader.iPtr++;
@@ -864,7 +863,6 @@ TFrameState CJp2kReadCodec::ReadCODL( TBool aMain )
         {
         // Entropy coder with precincts defined below
         codMarker->iPrecinctSiz = HBufC8::NewL( codMarker->iNumOfLevels + 1 );
-        CleanupStack::PushL(codMarker->iPrecinctSiz);
         for ( TUint8 index = 0; index < codMarker->iNumOfLevels + 1; ++index )
             {
             codMarker->iPrecinctSiz->Des().Append( *iReader.iPtr++ );
@@ -877,17 +875,14 @@ TFrameState CJp2kReadCodec::ReadCODL( TBool aMain )
         // We must be missing some data in the marker
         User::Leave( KErrCorrupt );
         }
-    if ( codMarker->iScod & 0x01 )
-        {
-            CleanupStack::Pop(codMarker->iPrecinctSiz);
-        }
+
     if ( !aMain )
         {
         CJ2kTileInfo& tile = CONST_CAST( CJ2kTileInfo&, iImageInfo->TileAt( iLastTileIndex ) );
 
         // Append COD to the current tile and decrement the tile length
         tile.AppendCOD( codMarker, markerLength + KMarkerSize );
-        CleanupStack::PopAndDestroy(codMarker);
+        CleanupStack::Pop(codMarker);
         }
 
     // Any valid marker may come after COD marker
@@ -927,8 +922,7 @@ TFrameState CJp2kReadCodec::ReadCOCL( TBool aMain )
     const TSizMarker& sizMarker = iImageInfo->SizMarker();
 
     TCOCMarker *cocMarker = new ( ELeave ) TCOCMarker;    
-    //CleanupDeletePushL(cocMarker);
-    CleanupStack::PushL(cocMarker);
+    CleanupDeletePushL(cocMarker);
 
     if ( sizMarker.iCsiz < 257 )
         {
@@ -957,7 +951,6 @@ TFrameState CJp2kReadCodec::ReadCOCL( TBool aMain )
         {
         // Entropy coder with precincts defined below
         cocMarker->iPrecinctSiz = HBufC8::NewL( cocMarker->iNumOfLevels + 1 );
-        CleanupStack::PushL(cocMarker->iPrecinctSiz);
         for ( TUint8 index = 0; index < cocMarker->iNumOfLevels + 1; ++index )
             {
             cocMarker->iPrecinctSiz->Des().Append( *iReader.iPtr++ );
@@ -982,12 +975,7 @@ TFrameState CJp2kReadCodec::ReadCOCL( TBool aMain )
         // Append COC to the current tile and decrement the tile length
         tile.AppendCOCL( cocMarker, markerLength + KMarkerSize );
         }
-    
-    if ( cocMarker->iScoc & 0x01 )
-        {    
-            CleanupStack::Pop(cocMarker->iPrecinctSiz);
-        }
-    CleanupStack::PopAndDestroy(cocMarker);
+    CleanupStack::Pop(cocMarker);
 
     // Any valid marker may come after COC marker
     iFHState = EStateInUnknown;
@@ -1035,8 +1023,7 @@ TFrameState CJp2kReadCodec::ReadQCDL( TBool aMain )
         // QCD in Tile Part Header
         qcdMarker = new ( ELeave ) TQCDMarker;
         
-        //CleanupDeletePushL( qcdMarker );
-        CleanupStack::PushL( qcdMarker );
+        CleanupDeletePushL( qcdMarker );
         }
 
     qcdMarker->iSqcd = *iReader.iPtr++;
@@ -1079,12 +1066,6 @@ TFrameState CJp2kReadCodec::ReadQCDL( TBool aMain )
                 }
             }
         }
-    
-    CleanupStack::PushL( qcdMarker->iExponent );
-    if ((qcdMarker->iSqcd & 0x1f) || (qcdMarker->iSqcd & 0x01))
-    {
-        CleanupStack::PushL( qcdMarker->iMantissa );       
-    }
 
     // Make sure we read all the data
     if ( ( iReader.iPtr - iReader.iPtrStartMarker ) != ( markerLength + KMarkerSize ) )
@@ -1093,22 +1074,13 @@ TFrameState CJp2kReadCodec::ReadQCDL( TBool aMain )
         User::Leave( KErrCorrupt );
         }
 
-    
-    if ((qcdMarker->iSqcd & 0x1f) || (qcdMarker->iSqcd & 0x01))
-    {
-        CleanupStack::Pop( qcdMarker->iMantissa );       
-    }   
-    
-    CleanupStack::Pop( qcdMarker->iExponent );
-    
     if ( !aMain )
         {
         CJ2kTileInfo& tile = CONST_CAST( CJ2kTileInfo&, iImageInfo->TileAt( iLastTileIndex ) );
 
         // Append QCD to the current tile and decrement the tile length
         tile.AppendQCD( qcdMarker, markerLength + KMarkerSize );
-        //CleanupStack::PopAndDestroy(qcdMarker);
-        CleanupStack::PopAndDestroy(qcdMarker);
+        CleanupStack::Pop(qcdMarker);
         }
 
     // Any valid marker may come after QCD marker
@@ -1149,8 +1121,7 @@ TFrameState CJp2kReadCodec::ReadQCCL(TBool aMain)
 
     TQCCMarker *qccMarker = new (ELeave) TQCCMarker;
 
-    //CleanupDeletePushL( qccMarker );
-    CleanupStack::PushL( qccMarker );
+    CleanupDeletePushL( qccMarker );
 
     if ( sizMarker.iCsiz < 257 )
         {
@@ -1203,12 +1174,6 @@ TFrameState CJp2kReadCodec::ReadQCCL(TBool aMain)
                 }
             }
         }
-    
-    CleanupStack::PushL( qccMarker->iExponent );
-    if( (qccMarker->iSqcc & 0x1f) || (qccMarker->iSqcc & 0x01) )
-    {
-        CleanupStack::PushL( qccMarker->iMantissa );
-    }
 
     // Make sure we read all the data
     if ( ( iReader.iPtr - iReader.iPtrStartMarker ) != ( markerLength + KMarkerSize ) )
@@ -1228,14 +1193,7 @@ TFrameState CJp2kReadCodec::ReadQCCL(TBool aMain)
         // Append QCC to the current tile and decrement the tile length
         tile.AppendQCCL( qccMarker, markerLength + KMarkerSize );
         }
-    
-    if( (qccMarker->iSqcc & 0x1f) || (qccMarker->iSqcc & 0x01) )
-    {
-        CleanupStack::Pop( qccMarker->iMantissa );
-    }    
-    
-    CleanupStack::Pop( qccMarker->iExponent );
-    CleanupStack::PopAndDestroy(qccMarker);
+    CleanupStack::Pop(qccMarker);
 
     // Any valid marker may come after QCC marker
     iFHState = EStateInUnknown;
@@ -1275,7 +1233,7 @@ TFrameState CJp2kReadCodec::ReadRGNL( TBool aMain )
     const TSizMarker& sizMarker = iImageInfo->SizMarker();
 
     TRGNMarker *rgnMarker = new ( ELeave ) TRGNMarker;
-    CleanupStack::PushL( rgnMarker );
+    CleanupDeletePushL( rgnMarker );
 
     if ( sizMarker.iCsiz < 257 )
         {
@@ -1309,7 +1267,7 @@ TFrameState CJp2kReadCodec::ReadRGNL( TBool aMain )
         // Append RGN to the current tile and decrement the tile length
         tile.AppendRGNL( rgnMarker, markerLength + KMarkerSize );
         }
-    CleanupStack::PopAndDestroy(rgnMarker);
+    CleanupStack::Pop(rgnMarker);
 
     // Any valid marker may come after RGN marker
     iFHState = EStateInUnknown;
@@ -1402,7 +1360,7 @@ TFrameState CJp2kReadCodec::ReadPOCL( TBool aMain )
         // Append POC to the current tile and decrement the tile length
         tile.AppendPOCL( pocMarker, markerLength + KMarkerSize );
         }
-    CleanupStack::Pop(  );
+    CleanupStack::Pop(pocMarker);
 
     // Any valid marker may come after POC marker
     iFHState = EStateInUnknown;
@@ -1449,14 +1407,13 @@ TFrameState CJp2kReadCodec::ReadPPML()
             }
 
         TPPMMarker *ppmMarker = new ( ELeave ) TPPMMarker;        
-        CleanupStack::PushL( ppmMarker );
+        CleanupDeletePushL( ppmMarker );
 
         ppmMarker->iZppm = *iReader.iPtr++;
         TUint32 entries = (TUint32)( markerLength - KMarkerSize - 1 );
 
         ppmMarker->iNppm = entries;
         ppmMarker->iIppm = HBufC8::NewL( entries );
-        CleanupStack::PushL( ppmMarker->iIppm );
 
         if ( !isUnderflow )
             {
@@ -1502,7 +1459,6 @@ TFrameState CJp2kReadCodec::ReadPPML()
             {
             User::LeaveIfError( mainMarker.iPpm.Append( ppmMarker ) );
             }
-        CleanupStack::Pop(ppmMarker->iIppm);
         CleanupStack::Pop(ppmMarker);
         }
     else
@@ -1629,7 +1585,7 @@ TFrameState CJp2kReadCodec::ReadTLML()
         {
         User::LeaveIfError( mainMarker.iTlm.Append( tlmMarker ) );
         }
-    CleanupStack::Pop();
+    CleanupStack::Pop(tlmMarker);
 
     // Any valid marker may come after TLM marker
     iFHState = EStateInUnknown;
@@ -1666,14 +1622,13 @@ TFrameState CJp2kReadCodec::ReadPLML()
         }
 
     TPLMMarker *plmMarker =  new ( ELeave ) TPLMMarker;    
-    CleanupStack::PushL( plmMarker );
+    CleanupDeletePushL( plmMarker );
 
     plmMarker->iZplm = *iReader.iPtr++;
     TUint32 entries = (TUint32)( markerLength - KMarkerSize - 1 );
 
     plmMarker->iNplm = (TUint8)entries;
     plmMarker->iIplm = HBufC8::NewL( entries );
-    CleanupStack::PushL( plmMarker->iIplm );
     plmMarker->iIplm->Des().Append( iReader.iPtr, entries );
     iReader.iPtr += entries;
 
@@ -1707,8 +1662,7 @@ TFrameState CJp2kReadCodec::ReadPLML()
         {
         User::LeaveIfError( mainMarker.iPlm.Append( plmMarker ) );
         }
-    CleanupStack::Pop(plmMarker->iIplm);
-    CleanupStack::PopAndDestroy(plmMarker);
+    CleanupStack::Pop(plmMarker);
 
     // Any valid marker may come after PLM marker
     iFHState = EStateInUnknown;
@@ -1767,7 +1721,7 @@ TFrameState CJp2kReadCodec::ReadCRGL()
 
     iImageInfo->AppendCRGL( crgMarker );
 
-    CleanupStack::Pop(  );
+    CleanupStack::Pop(crgMarker);
 
     // Any valid marker may come after CRG marker
     iFHState = EStateInUnknown;
@@ -1813,16 +1767,13 @@ TFrameState CJp2kReadCodec::ReadCOML( TBool aMain )
             isUnderflow = ETrue;
             }
 
-        TCOMMarker* comMarker = new ( ELeave ) TCOMMarker;   
-        //CleanupDeletePushL(comMarker);
-        CleanupStack::PushL( comMarker );
+        TCOMMarker* comMarker = new ( ELeave ) TCOMMarker;        
+        CleanupDeletePushL( comMarker );
 
         comMarker->iRcom = PtrReadUtil::ReadBigEndianUint16Inc( iReader.iPtr );
         TInt entries = markerLength - ( 2 * KMarkerSize );
 
         comMarker->iCcom = HBufC8::NewL( entries );
-        //CleanupDeletePushL( comMarker->iCcom );
-        CleanupStack::PushL(comMarker->iCcom);
         if ( !isUnderflow )
             {
             comMarker->iCcom->Des().Append( iReader.iPtr, entries );
@@ -1855,7 +1806,6 @@ TFrameState CJp2kReadCodec::ReadCOML( TBool aMain )
             // Append COM to the current tile and decrement the tile length
             tile.AppendCOML( comMarker, markerLength + KMarkerSize );
             }
-        CleanupStack::Pop(comMarker->iCcom);
         CleanupStack::Pop(comMarker);
         }
     else
@@ -1889,7 +1839,7 @@ TFrameState CJp2kReadCodec::ReadCOML( TBool aMain )
         // Underflow, stay in the same state
         if ( aMain )
             {
-            iReader.UpdateMainHeader(  );
+            iReader.UpdateMainHeader();
             }
         return EFrameIncomplete;
         }
@@ -2030,7 +1980,7 @@ TFrameState CJp2kReadCodec::ReadSOTL()
     if ( iUseNewTile )
         { 
         iImageInfo->Append( tile );
-        CleanupStack::Pop();
+        CleanupStack::Pop(tile);
         iUseNewTile = EFalse;
         }
 
@@ -2352,12 +2302,11 @@ TFrameState CJp2kReadCodec::ReadPPTL()
         }
 
     TPPTMarker *pptMarker = new ( ELeave ) TPPTMarker;    
-    CleanupStack::PushL( pptMarker );
+    CleanupDeletePushL(pptMarker);
 
     TInt entries = markerLength - KMarkerSize - 1;
     pptMarker->iZppt = *iReader.iPtr++;
     pptMarker->iIppt = HBufC8::NewL( entries );
-    CleanupStack::PushL( pptMarker->iIppt );
     pptMarker->iIppt->Des(  ).Append( iReader.iPtr, entries );
     iReader.iPtr += entries;
 
@@ -2372,8 +2321,7 @@ TFrameState CJp2kReadCodec::ReadPPTL()
     
     // Append PPT to the current tile and decrement the tile length
     tile.AppendPPTL( pptMarker, markerLength + KMarkerSize );
-    CleanupStack::Pop(pptMarker->iIppt);
-    CleanupStack::PopAndDestroy(pptMarker);
+    CleanupStack::Pop(pptMarker);
 
     // Any valid marker may come after PPT marker
     iFHState = EStateInUnknown;
@@ -2411,8 +2359,7 @@ TFrameState CJp2kReadCodec::ReadPLTL()
         }
 
     TPLTMarker *pltMarker = new ( ELeave ) TPLTMarker;
-    CleanupStack::PushL( pltMarker );
-    //CleanupDeletePushL( pltMarker );
+    CleanupDeletePushL( pltMarker );
 
     pltMarker->iZplt = *iReader.iPtr++;
 
@@ -2434,8 +2381,7 @@ TFrameState CJp2kReadCodec::ReadPLTL()
 
     // Append PLT to the current tile and decrement the tile length
     tile.AppendPLTL( pltMarker, markerLength + KMarkerSize );
-    //CleanupStack::Pop();
-    CleanupStack::PopAndDestroy(pltMarker);
+    CleanupStack::Pop(pltMarker);
 
     // Any valid marker may come after PLT marker
     iFHState = EStateInUnknown;
