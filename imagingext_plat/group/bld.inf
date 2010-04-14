@@ -24,3 +24,4 @@
 #include "../ecam_orientation_custom_api/group/bld.inf"
 #include "../ecam_ui_orientation_override_custom_api/group/bld.inf"
 #include "../ecam_face_tracking_custom_api/group/bld.inf"
+#include "../ecam_use_case_hint_custom_api/group/bld.inf"
