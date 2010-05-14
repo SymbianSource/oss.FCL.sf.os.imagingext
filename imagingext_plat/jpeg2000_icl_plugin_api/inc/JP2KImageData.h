@@ -21,7 +21,7 @@
 #define __JP2KIMAGEDATA_H__
 
 //  INCLUDES
-#include <ICL/ImageData.h>
+#include <icl/imagedata.h>
 
 // CONSTANTS
 
