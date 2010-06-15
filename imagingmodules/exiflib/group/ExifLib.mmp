@@ -29,7 +29,7 @@ VENDORID    VID_DEFAULT
 // Define directories for the .def-files of WINS and WINSCW builds separately.
 // IMPORTANT NOTICE:  The lines in the example that end with a backslash 
 // must have one space after the backslash.
-#if defined(ARMCC)
+#if defined(EABI)
 deffile ../EABI/ 
 #elif defined( WINSCW )
 deffile ../Bwinscw/ 
