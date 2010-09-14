@@ -19,8 +19,6 @@
 
 #include "../imagingext_plat/group/bld.inf"
 #include "../imagingext_pub/group/bld.inf"
-
-#include "../imageadaptationextensions/group/bld.inf"
 #include "../imagingmodules/group/bld.inf"
 
 PRJ_EXPORTS

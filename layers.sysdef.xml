@@ -28,7 +28,6 @@
     <layer name="api_test_layer">
       <module name="imagingext_api_tests">
       	<unit unitID="imm.imagingext.exif_api" mrp="" bldFile="&layer_real_source_path;/imagingext_pub/exif_api/tsrc/group" name="exif_api" />
-      	<unit unitID="imm.imagingext.iclextjpegapi_api" mrp="" bldFile="&layer_real_source_path;/imagingext_plat/extended_icl_jpeg_api/tsrc/group" name="iclextjpegapi_api" />
       </module>
     </layer>
 
