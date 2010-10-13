@@ -85,8 +85,10 @@ LIBRARY         ExifLib.lib
 #ifdef          _USE_CPPUNIT_
 LIBRARY         cppunitframework.lib
 #else
-LIBRARY         stiftestinterface.lib
+LIBRARY         StifTestInterface.lib
 #endif
 
 EPOCHEAPSIZE    1 10000000
 EXPORTUNFROZEN
+
+SMPSAFE

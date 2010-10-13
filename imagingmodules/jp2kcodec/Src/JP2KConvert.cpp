@@ -28,7 +28,7 @@
 #include <barsread.h>
 #include <bautils.h>
 #include <e32math.h>
-#include <101F862D_extra.rsg>
+#include <101f862d_extra.rsg>
 #include <icl/icl_uids.hrh>
 #include "JP2KUids.hrh"
 #include <JP2KImageData.h>

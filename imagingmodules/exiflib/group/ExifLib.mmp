@@ -56,4 +56,5 @@ OS_LAYER_SYSTEMINCLUDE
 
 LIBRARY     euser.lib 
 
+SMPSAFE
 // End of file

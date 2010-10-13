@@ -26,7 +26,10 @@ void CExifCreateTest::ExifCreate101L()
 	CleanupStack::PushL(jpeg);
 	CExifModify* modify = CExifModify::NewL(*jpeg, CExifModify::ECreate, CExifModify::ENoJpegParsing);
 	if(!modify)
-		User::Leave(KErrGeneral);
+        {
+        delete modify;
+        User::Leave(KErrGeneral);
+        }
 	delete modify;
 	CleanupStack::PopAndDestroy(jpeg);
 	}

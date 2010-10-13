@@ -25,9 +25,10 @@ void CExifCreateTest::ExifCreate001L()
 	HBufC8* jpeg = TUtils::ReadFileL(iFs, KValidJpeg);
 	CleanupStack::PushL(jpeg);
 	CExifModify* modify = CExifModify::NewL(*jpeg, CExifModify::ECreate);
+	CleanupStack::PushL(modify);
 	if(!modify)
-		User::Leave(KErrGeneral);
-	delete modify;
+        User::Leave(KErrGeneral);
+	CleanupStack::PopAndDestroy(modify);
 	CleanupStack::PopAndDestroy(jpeg);
 	}
 

@@ -27,7 +27,10 @@ void CExifReadTest::ExifRead101L()
 	CleanupStack::PushL(exif);
 	CExifRead* read = CExifRead::NewL(*exif, CExifRead::ENoJpeg);
 	if(!read)
+	    {
+        delete read;
 		User::Leave(KErrGeneral);
+		}
 	delete read;
 	CleanupStack::PopAndDestroy(exif);
 	}

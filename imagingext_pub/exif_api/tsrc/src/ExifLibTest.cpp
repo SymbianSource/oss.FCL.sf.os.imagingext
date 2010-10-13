@@ -71,9 +71,9 @@ CExifLibTest::~CExifLibTest()
 MTest*  CExifLibTest::suiteL ()
     {
     CTestSuite *suite = CTestSuite::NewL(_L8("Test Suite Container"));
-
+    CleanupStack::PushL( suite );
     suite->addTestL(CExifLibTestInc::suiteL());
-
+    CleanupStack::Pop( suite );
     return suite;
     
     }

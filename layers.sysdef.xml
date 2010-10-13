@@ -9,20 +9,6 @@
       <module name="imagingext">
         <unit unitID="imm.imagingext" mrp="" bldFile="&layer_real_source_path;/group" name="imagingext" />
       </module>
-
-      <module name="">
-        <unit unitID="imm.imagingext.imagingmodules.videoencpluginarm" mrp="" 
-              bldFile="&layer_real_source_path;/imagingmodules/VideoEncPluginARM/Build" 
-              filter="oem_build"
-              name="imm_imagingext_imagingmodules_videoencpluginarm" />
-      </module>
-
-      <module name="">
-        <unit unitID="imm.imagingext.imagingmodules.h264avcvideoencarm" mrp="" 
-              bldFile="&layer_real_source_path;/imagingmodules/H264AVCVideoEncARM/group"
-              filter="oem_build"
-              name="imm_imagingext_imagingmodules_h264avcvideoencarm" />
-      </module>
     </layer>
 
     <layer name="api_test_layer">

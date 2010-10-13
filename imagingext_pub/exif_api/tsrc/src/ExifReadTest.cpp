@@ -26,7 +26,10 @@ void CExifReadTest::ExifRead001L()
 	CleanupStack::PushL(exif);
 	CExifRead* read = CExifRead::NewL(*exif);
 	if(!read)
+	    {
+        delete read;
 		User::Leave(KErrGeneral);
+        }
 	delete read;
 	CleanupStack::PopAndDestroy(exif);
 	}
@@ -1454,9 +1457,9 @@ void CExifReadTest::ExifRead017L()
 
 	RDebug::Print(_L("Instantiate CExifRead..."));
 	CExifRead* read = CExifRead::NewL(*exif);
+	CleanupStack::PushL(read);
 	if(!read)
 		User::Leave(KErrGeneral);
-	CleanupStack::PushL(read);
 	
 	RDebug::Print(_L("Read thumbnail..."));
 	HBufC8* thumbnail = read->GetThumbnailL();
@@ -1478,9 +1481,9 @@ void CExifReadTest::ExifRead017L()
 
 	RDebug::Print(_L("Instantiate CExifRead no jpeg..."));
 	read = CExifRead::NewL(*exif, CExifRead::ENoJpeg);
+	CleanupStack::PushL(read);
 	if(!read)
 		User::Leave(KErrGeneral);
-	CleanupStack::PushL(read);
 	
 	RDebug::Print(_L("Read thumbnail..."));
 	thumbnail = read->GetThumbnailL();
@@ -1501,9 +1504,9 @@ void CExifReadTest::ExifRead017L()
 
 	RDebug::Print(_L("Instantiate CExifRead..."));
 	read = CExifRead::NewL(*exif);
+	CleanupStack::PushL(read);
 	if(!read)
 		User::Leave(KErrGeneral);
-	CleanupStack::PushL(read);
 	
 	RDebug::Print(_L("Read thumbnail..."));
 	thumbnail = read->GetThumbnailL();
@@ -1524,9 +1527,9 @@ void CExifReadTest::ExifRead017L()
 
 	RDebug::Print(_L("Instantiate CExifRead no jpeg..."));
 	read = CExifRead::NewL(*exif, CExifRead::ENoJpeg);
+	CleanupStack::PushL(read);
 	if(!read)
 		User::Leave(KErrGeneral);
-	CleanupStack::PushL(read);
 	
 	RDebug::Print(_L("Read thumbnail..."));
 	thumbnail = read->GetThumbnailL();
@@ -1555,9 +1558,9 @@ void CExifReadTest::ExifRead018L()
 
 	RDebug::Print(_L("Instantiate CExifRead and ignore unknown/missing tags..."));
 	CExifRead* read = CExifRead::NewL(*exif, CExifRead::ENoTagChecking);
+	CleanupStack::PushL(read);
 	if(!read)
 		User::Leave(KErrGeneral);
-	CleanupStack::PushL(read);
 	
 	RDebug::Print(_L("Read thumbnail..."));
 	HBufC8* thumbnail = read->GetThumbnailL();
@@ -1598,9 +1601,9 @@ void CExifReadTest::ExifRead018L()
 
 	RDebug::Print(_L("Instantiate CExifRead and ignore unknown/missing tags..."));
 	read = CExifRead::NewL(*exif, CExifRead::ENoTagChecking);
+	CleanupStack::PushL(read);
 	if(!read)
 		User::Leave(KErrGeneral);
-	CleanupStack::PushL(read);
 	
 	RDebug::Print(_L("Read thumbnail..."));
 	thumbnail = read->GetThumbnailL();
@@ -1641,9 +1644,9 @@ void CExifReadTest::ExifRead018L()
 
 	RDebug::Print(_L("Instantiate CExifRead and ignore unknown/missing tags..."));
 	read = CExifRead::NewL(*exif, CExifRead::ENoTagChecking);
+	CleanupStack::PushL(read);
 	if(!read)
 		User::Leave(KErrGeneral);
-	CleanupStack::PushL(read);
 	
 	RDebug::Print(_L("Read thumbnail..."));
 	thumbnail = read->GetThumbnailL();

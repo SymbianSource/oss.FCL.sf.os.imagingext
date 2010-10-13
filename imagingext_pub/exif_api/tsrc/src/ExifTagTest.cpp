@@ -24,9 +24,9 @@ void CExifTagTest::ExifTag001L()
 	HBufC8* exif = TUtils::ReadFileL(iFs, KFullExif);
 	CleanupStack::PushL(exif);
 	CExifRead* read = CExifRead::NewL(*exif);
+	CleanupStack::PushL(read);
 	if(!read)
 		User::Leave(KErrGeneral);
-	CleanupStack::PushL(read);
 
 	const CExifTag* tag = read->GetTagL(EIfd0, KIdImageDescription);
 	CExifTag* copyTag = tag->DuplicateL();

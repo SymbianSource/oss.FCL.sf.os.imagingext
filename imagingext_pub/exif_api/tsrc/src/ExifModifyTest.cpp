@@ -27,7 +27,10 @@ void CExifModifyTest::ExifModify001L()
 	CleanupStack::PushL(exif);
 	CExifModify* modify = CExifModify::NewL(*exif, CExifModify::EModify);
 	if(!modify)
+	    {
+        delete modify;
 		User::Leave(KErrGeneral);
+        }
 	delete modify;
 	CleanupStack::PopAndDestroy(exif);
     
@@ -2181,9 +2184,9 @@ void CExifModifyTest::ExifModify020L()
 	HBufC8* exif = TUtils::ReadFileL(iFs, KFullExif);
 	CleanupStack::PushL(exif);
 	CExifModify* modify = CExifModify::NewL(*exif, CExifModify::EModify, CExifModify::ENoJpegParsing);
+	CleanupStack::PushL(modify);
 	if(!modify)
 		User::Leave(KErrGeneral);
-	CleanupStack::PushL(modify);
     modify->SetCustomRenderedL(0);
     HBufC8* buffer = modify->WriteDataL(*exif);
     CleanupStack::PopAndDestroy(modify);
@@ -2244,9 +2247,9 @@ void CExifModifyTest::ExifModify021L()
 	HBufC8* exif = TUtils::ReadFileL(iFs, KUnknown_tags);
 	CleanupStack::PushL(exif);
 	CExifModify* modify = CExifModify::NewL(*exif, CExifModify::EModify, CExifModify::ENoJpegParsing | CExifModify::ENoTagChecking );
+	CleanupStack::PushL(modify);
 	if(!modify)
 		User::Leave(KErrGeneral);
-	CleanupStack::PushL(modify);
 
 
   RDebug::Print(_L("CExifModifyTest: modify tag SetOrientationL"));
@@ -2305,9 +2308,9 @@ void CExifModifyTest::ExifModify022L()
 	HBufC8* exif = TUtils::ReadFileL(iFs, KNoTagChk_IMG_AN19);
 	CleanupStack::PushL(exif);
 	CExifModify* modify = CExifModify::NewL(*exif, CExifModify::EModify, CExifModify::ENoJpegParsing | CExifModify::ENoTagChecking );
+	CleanupStack::PushL(modify);
 	if(!modify)
 		User::Leave(KErrGeneral);
-	CleanupStack::PushL(modify);
 
 
   RDebug::Print(_L("CExifModifyTest: modify tag SetOrientationL"));
@@ -2366,9 +2369,9 @@ void CExifModifyTest::ExifModify023L()
 	HBufC8* exif = TUtils::ReadFileL(iFs, KtagInWrongIfd);
 	CleanupStack::PushL(exif);
 	CExifModify* modify = CExifModify::NewL(*exif, CExifModify::EModify, CExifModify::ENoJpegParsing | CExifModify::ENoTagChecking );
+	CleanupStack::PushL(modify);
 	if(!modify)
 		User::Leave(KErrGeneral);
-	CleanupStack::PushL(modify);
 
 
   RDebug::Print(_L("CExifModifyTest: modify tag SetOrientationL"));

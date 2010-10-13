@@ -24,7 +24,10 @@ void CExifModifyTest2::ExifModify001L()
 	{
 	CExifModify* modify = CExifModify::NewL();
 	if(!modify)
+	    {
+	    delete modify;
 		User::Leave(KErrGeneral);
+        }
 	delete modify;
 	}
 
