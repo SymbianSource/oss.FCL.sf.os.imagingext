@@ -18,10 +18,10 @@
 #ifndef _ICLEXTJPEGAPI_
 #define _ICLEXTJPEGAPI_
 
-#include "imageconversion.h"
-#include <icl/icl_uids.hrh>
+#include "ImageConversion.h"
+#include <icl/Icl_UIDS.hrh>
 
-#include "iclexifimageframe.h"
+#include "ICLExifImageFrame.h"
 const TInt KMaxNumberOfPlanes = KMaxPlanesInFrame;
 const TUid KUidExtFormatJpeg = { 0 };
 const TUid KUidExtIclApiSupport = { 0 };
